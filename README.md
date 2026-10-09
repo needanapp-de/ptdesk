@@ -11,8 +11,8 @@ und drucken, ohne die Handy-App.
 - **Seriendruck aus Excel:** ein Etikett pro Tabellenzeile, die passende Tabelle erstellt ptdesk selbst
 - Kommandozeile für Skripte und Automatisierung
 
-Getestet mit PT-P300BT und 12-mm-TZe-Band (weiß/schwarz) unter Ubuntu 26.04. **Noch nicht am Gerät getestet:**
-die Windows-Version, Kopien und Seriendruck (mehrere Etiketten am Stück) sowie die Schnittmarken.
+Getestet mit PT-P300BT und 12-mm-TZe-Band (weiß/schwarz) unter Ubuntu 26.04, auch mehrzeiliger Text, Kopien und
+Schnittmarken. **Noch nicht am Gerät getestet:** die Windows-Version und der Seriendruck aus einer Tabelle.
 
 > Inoffizielles Projekt, nicht mit Brother verbunden. Brother und P-touch sind Marken der Brother Industries, Ltd.
 
