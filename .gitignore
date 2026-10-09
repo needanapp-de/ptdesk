@@ -1,0 +1,12 @@
+.venv/
+.venv-win/
+__pycache__/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+packaging/ptdesk.ico
+packaging/ptdesk.png
+*.apkm
+*.apk

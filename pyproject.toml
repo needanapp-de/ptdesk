@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ptdesk"
+version = "0.1.0"
+description = "Desktop-App für den Brother P-touch CUBE PT-P300BT (Linux + Windows, Bluetooth)"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "PySide6>=6.7",
+    "Pillow>=10.0",
+    "python-barcode>=0.15",
+    "openpyxl>=3.1",
+    "dbus-fast>=2.0; sys_platform == 'linux'",
+    "winrt-runtime>=2.0; sys_platform == 'win32'",
+    "winrt-Windows.Devices.Bluetooth>=2.0; sys_platform == 'win32'",
+    "winrt-Windows.Devices.Enumeration>=2.0; sys_platform == 'win32'",
+    "winrt-Windows.Foundation>=2.0; sys_platform == 'win32'",
+    "winrt-Windows.Foundation.Collections>=2.0; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pyinstaller>=6.10"]
+
+[project.scripts]
+ptdesk = "ptdesk.cli:main"
+
+[project.gui-scripts]
+ptdesk-gui = "ptdesk.gui.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ptdesk = ["fonts/*.ttf", "fonts/LICENSE*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120

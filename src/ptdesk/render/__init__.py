@@ -1,0 +1,1 @@
+"""Label model and rendering."""
