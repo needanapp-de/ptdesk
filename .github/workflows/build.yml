@@ -112,3 +112,12 @@ jobs:
             dist/ptdesk-windows.zip
             dist/ptdesk-linux-x86_64.tar.gz
           fail_on_unmatched_files: true
+
+  mirror-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: release
+    uses: ./.github/workflows/mirror-release.yml
+    with:
+      tag: ${{ github.ref_name }}
+    secrets:
+      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
