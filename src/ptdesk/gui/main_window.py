@@ -166,10 +166,10 @@ class MainWindow(QMainWindow):
         self.connect_button = QPushButton("Drucker verbinden …")
         self.connect_button.clicked.connect(self._on_connect_button)
         toolbar.addWidget(self.connect_button)
-        self.printer_status = QLabel()
-        self.printer_status.setTextFormat(Qt.TextFormat.RichText)
-        self.printer_status.setContentsMargins(12, 0, 12, 0)
-        toolbar.addWidget(self.printer_status)
+        self.status_label = QLabel()
+        self.status_label.setTextFormat(Qt.TextFormat.RichText)
+        self.status_label.setContentsMargins(12, 0, 12, 0)
+        toolbar.addWidget(self.status_label)
 
         splitter = QSplitter(Qt.Orientation.Horizontal)
         splitter.addWidget(self._build_left_panel())
@@ -767,7 +767,7 @@ class MainWindow(QMainWindow):
 
     def _on_connecting(self, name: str) -> None:
         self.connecting = True
-        self.printer_status.setText(f"<span style='color:#d0a000'>●</span> Verbinde mit {name} …")
+        self.status_label.setText(f"<span style='color:#d0a000'>●</span> Verbinde mit {name} …")
         self._update_printer_ui(status=False)
 
     def _on_connected(self, info: PrinterInfo) -> None:
@@ -890,7 +890,7 @@ class MainWindow(QMainWindow):
         self.connect_button.setEnabled(not self.connecting and not self.printing)
         self.connect_button.setText("Trennen" if connected else "Drucker verbinden …")
         if status:
-            self.printer_status.setText(self._status_html())
+            self.status_label.setText(self._status_html())
 
     def _status_html(self) -> str:
         if self.connecting:
