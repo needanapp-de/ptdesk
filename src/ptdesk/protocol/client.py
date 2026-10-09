@@ -253,6 +253,10 @@ class PTouchClient:
             feed_last=options.feed_last,
         )
         job = raster.encode_job(pages, settings)
+        log.info(
+            "Print job: %d page(s), %.1f mm, %d bytes, %s, cut marks %s",
+            len(pages), length_mm, len(job), "feed last" if options.feed_last else "chain", options.cut_marks,
+        )
 
         def report(stage: str, fraction: float) -> None:
             if progress:
@@ -324,4 +328,5 @@ class PTouchClient:
                     break
         except TimeoutError:
             pass
+        log.info("Printed: %d completion report(s) for %d page(s)", completed, pages)
         report("print", 1.0)
