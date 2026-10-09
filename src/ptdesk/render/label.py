@@ -470,6 +470,24 @@ def print_image(
     return band
 
 
+def change_tape(label: Label, tape_mm: float, old_printable_mm: float, new_printable_mm: float) -> None:
+    """Switch ``label`` to another tape width, scaling the elements from the old printable band to the new one.
+
+    Positions across the tape and heights scale with the band; images also keep their aspect ratio.
+    """
+    if tape_mm == label.tape_mm and old_printable_mm == new_printable_mm:
+        return
+    old_top = max(0.0, (label.tape_mm - old_printable_mm) / 2)
+    new_top = max(0.0, (tape_mm - new_printable_mm) / 2)
+    factor = new_printable_mm / old_printable_mm if old_printable_mm > 0 else 1.0
+    for element in label.elements:
+        element.y = round(new_top + (element.y - old_top) * factor, 2)
+        element.height = round(max(element.height * factor, 0.5), 2)
+        if isinstance(element, ImageElement):
+            element.width = round(max(element.width * factor, 0.5), 2)
+    label.tape_mm = tape_mm
+
+
 def _printable_box(length_mm: float, tape_mm: float, printable_mm: float, margin_mm: float) -> tuple[float, float, float, float]:
     top = max(0.0, (tape_mm - printable_mm) / 2)
     return margin_mm, top, max(length_mm - 2 * margin_mm, 1), min(printable_mm, tape_mm)

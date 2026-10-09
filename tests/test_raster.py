@@ -1,6 +1,6 @@
 import random
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 from ptdesk.models import PT_P300BT
 from ptdesk.protocol import raster
@@ -68,3 +68,18 @@ def test_print_image_size() -> None:
     image = print_image(label, tape.printable_px)
     assert image.height == 64
     assert image.width == round(50 * 180 / 25.4) - 2 * round(2.5 * 180 / 25.4)
+
+
+def test_change_tape_scales_band() -> None:
+    from ptdesk.render.label import change_tape
+
+    mm12 = PT_P300BT.tape(12).printable_px / PT_P300BT.px_per_mm
+    mm9 = PT_P300BT.tape(9).printable_px / PT_P300BT.px_per_mm
+    label = text_label("Hallo", 40, 12, mm12)
+    change_tape(label, 9, mm12, mm9)
+    e = label.elements[0]
+    assert label.tape_mm == 9
+    assert abs(e.y - (9 - mm9) / 2) < 0.01 and abs(e.height - mm9) < 0.01
+    image = print_image(label, PT_P300BT.tape(9).printable_px)
+    assert image.height == 50
+    assert ImageOps.invert(image.convert("L")).getbbox() is not None  # text is still printed
